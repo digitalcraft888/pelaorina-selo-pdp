@@ -52,7 +52,7 @@ tick(); setInterval(tick, 1000);
 /* delivery estimate (2–3 working days) */
 (function () {
   const addWd = n => { const d = new Date(); let a = 0; while (a < n) { d.setDate(d.getDate() + 1); if (d.getDay() % 6) a++; } return d; };
-  const f = d => d.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' });
+  const f = d => d.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' }).replace(/\.$/, '');
   $('[data-eta]').textContent = f(addWd(2)) + ' – ' + f(addWd(3));
 })();
 
