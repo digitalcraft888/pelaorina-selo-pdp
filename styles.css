@@ -289,7 +289,8 @@ body.cart-open .drawer{transform:none}body.cart-open .drawer-bg{opacity:1;pointe
 
 /* responsive */
 @media(max-width:1020px){
-  .pdp{grid-template-columns:1fr;gap:26px}.gallery{position:static}
+  .pdp{grid-template-columns:1fr;gap:20px}.gallery{position:static;order:2}
+  .buy{display:contents}.buy-head{order:1}.buy-head .sub{margin-bottom:0}.buy-body{order:3}
   .strip .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}.strip div:nth-child(2){border-right:0}.strip div:nth-child(-n+2){border-bottom:1px solid #2c2c33}
   .callout{position:static}
   .feat,.specs,.ps{grid-template-columns:1fr;gap:28px}.feat.rev .f-img{order:0}
