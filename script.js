@@ -10,7 +10,7 @@ const CONFIG = {
   liveProof: false                          // purchase pop-ups: enable ONLY when fed by real orders
 };
 const L = {
-  locale: 'de-DE', dec: ',', from: ' aus ', bought: 'hat den Selo gerade gekauft',
+  locale: 'de-DE', dec: ',', from: ' aus ', bought: 'hat den Selo gekauft', ago: m => 'vor ' + m + ' Min.',
   save: p => 'Spare ' + p + ' %', saveEach: x => 'Du sparst ' + x + ' pro Stück',
   totSave: x => 'Du sparst insgesamt ' + x + ' gegenüber dem regulären Preis',
   units: q => q === 1 ? '1 Stück' : q + ' Stück', each: x => x + ' pro Stück',
@@ -120,18 +120,27 @@ $('[data-sticky-add]').addEventListener('click', addToCart);
 const sticky = $('#sticky'), buyBtn = $('[data-add]');
 new IntersectionObserver(([e]) => sticky.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0), { threshold: 0 }).observe(buyBtn);
 
-/* purchase pop-ups: OFF by default. Only enable with a real order feed (fabricated proof is unlawful in the EU/DE). */
-if (CONFIG.liveProof) {
-  const people = [['Jonas', 'Hamburg'], ['Katrin', 'Köln'], ['Dirk', 'München']];
-  let pi = 0;
-  const toast = () => {
-    const [n, c] = people[pi++ % people.length], t = $('#toast');
-    $('[data-t1]').textContent = n + L.from + c;
-    $('[data-t2]').textContent = L.bought;
+/* purchase pop-ups: OFF by default. Feed real orders via window.RECENT_ORDERS =
+   [{ name:'Jonas', city:'Hamburg', minutes:12, photo:'https://…' }]  (photo optional → initials avatar).
+   Fabricated proof is unlawful in the EU/DE. ?proof=demo shows labelled preview data for design review only. */
+(function () {
+  const demo = new URLSearchParams(location.search).get('proof') === 'demo';
+  const real = Array.isArray(window.RECENT_ORDERS) && window.RECENT_ORDERS.length;
+  if (!CONFIG.liveProof && !demo && !real) return;
+  const orders = real ? window.RECENT_ORDERS : [{ name: 'Jonas', city: 'Hamburg' }, { name: 'Katrin', city: 'Köln' }, { name: 'Dirk', city: 'München' }];
+  const t = $('#toast'), av = $('[data-t-av]', t);
+  const hue = s => [...s].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+  let i = 0;
+  const show = () => {
+    const o = orders[i++ % orders.length];
+    av.innerHTML = o.photo ? '<img src="' + o.photo + '" alt="" width="44" height="44">' : '<span style="background:hsl(' + hue(o.name) + ' 45% 38%)">' + o.name[0].toUpperCase() + '</span>';
+    $('[data-t1]', t).textContent = o.name + L.from + o.city;
+    $('[data-t2]', t).textContent = L.bought + ' · ' + L.ago(o.minutes || 2 + (i * 3) % 14);
+    $('[data-t-demo]', t).hidden = real;
     t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 5000);
   };
-  setTimeout(() => { toast(); setInterval(toast, 22000); }, 9000);
-}
+  setTimeout(() => { show(); setInterval(show, 22000); }, demo ? 2500 : 9000);
+})();
 
 /* reveal on scroll */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });

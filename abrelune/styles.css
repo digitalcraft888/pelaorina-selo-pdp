@@ -27,7 +27,9 @@ h2{font-size:clamp(32px,4.4vw,50px)}
 .announce{background:var(--forest);color:#f3ecd7;font-size:14.5px;text-align:center;padding:9px 16px}
 .announce b{color:var(--brass)}
 .cd{font-variant-numeric:tabular-nums;white-space:nowrap}
-.cd span{font-weight:700}
+.cd{display:inline-flex;align-items:center;gap:1px;vertical-align:middle;margin:0 2px}
+.cd span{display:inline-block;min-width:30px;text-align:center;padding:2px 7px;margin-left:5px;border-radius:4px;background:var(--brass);color:var(--ink);font-weight:800;letter-spacing:.02em;box-shadow:1.5px 1.5px 0 rgba(0,0,0,.35)}
+.cd span:first-child{margin-left:0}
 
 /* header */
 header.top{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--rule)}
@@ -304,3 +306,15 @@ body.cart-open .drawer{transform:none}body.cart-open .drawer-bg{opacity:1;pointe
 .nudge button{display:block;margin-top:8px;background:var(--brass);color:var(--ink);font-weight:700;border:2px solid var(--ink);padding:7px 14px;font-size:14px}
 .nudge[hidden],[data-stock-n][hidden]{display:none}
 .li-t small{display:block}
+
+/* toast avatar */
+.t-av{flex:0 0 44px;width:44px;height:44px;border-radius:50%;overflow:hidden;display:block}
+.t-av img{width:100%;height:100%;object-fit:cover}
+.t-av span{width:100%;height:100%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:19px}
+.toast em{display:block;font-style:normal;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#b3401f;font-weight:700;margin-top:2px}
+.toast em[hidden]{display:none}
+
+.bf-note .cd{margin:4px 0 0}
+.bf-note .cd span{background:var(--ink);color:var(--brass);box-shadow:none}
+@media(max-width:640px){.announce .cd span{min-width:26px;padding:1px 5px;margin-left:3px}}
+@media(max-width:640px){.announce .fs{display:none}.announce .cd span{margin-left:4px}}

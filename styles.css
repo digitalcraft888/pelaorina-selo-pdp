@@ -340,3 +340,10 @@ body.cart-open .drawer{transform:none}body.cart-open .drawer-bg{opacity:1;pointe
 .nudge[hidden],[data-stock-n][hidden]{display:none}
 .li-t small{display:block}
 @media(max-width:640px){.cmp{table-layout:fixed;width:100%}.cmp th,.cmp td{padding:11px 5px;font-size:12.5px;overflow-wrap:anywhere}.cmp th:first-child,.cmp td:first-child{width:30%}.cmp thead th{font-size:14px}}
+
+/* toast avatar */
+.t-av{flex:0 0 44px;width:44px;height:44px;border-radius:50%;overflow:hidden;display:block}
+.t-av img{width:100%;height:100%;object-fit:cover}
+.t-av span{width:100%;height:100%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:19px}
+.toast em{display:block;font-style:normal;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#b3401f;font-weight:700;margin-top:2px}
+.toast em[hidden]{display:none}
